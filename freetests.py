@@ -164,6 +164,9 @@ class TestHTTPClient(unittest.TestCase):
         http = httpclass.HTTPClient()
         req = http.GET("http://%s:%d/49872398432" % (BASEHOST,BASEPORT) )
         self.assertTrue(req != None, "None Returned!")
+        print("-----------------------------------------------------------------------------------------")
+        print("requset is:"+str(req))
+        print("print req code is"+str(req.code))
         self.assertTrue(req.code == 404)
 
     def test404POST(self):
@@ -211,8 +214,7 @@ class TestHTTPClient(unittest.TestCase):
         
     # consider disabling this test until everything else works
     def testInternetGets(self):
-        '''Test HTTP Get in the wild, these webservers are far less
-           forgiving'''
+        '''Test HTTP Get in the wild, these webservers are far less forgiving'''
         MyHTTPHandler.get = echo_path_get
         http = httpclass.HTTPClient()        
         urls = [
@@ -224,6 +226,7 @@ class TestHTTPClient(unittest.TestCase):
         for url in urls:
             try:
                 req = http.GET( url )
+                print(req.body)
             except Exception as e:
                 print "An Exception was thrown for %s" % url
                 self.assertTrue( False, "An Exception was thrown for %s %s" % (url,e))
